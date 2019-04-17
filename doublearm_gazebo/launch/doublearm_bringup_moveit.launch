@@ -1,0 +1,15 @@
+<launch>
+  
+    <!-- Launch Gazebo  -->
+    <include file="$(find doublearm_gazebo)/launch/doublearm_world.launch" />
+   
+    <!-- ros_control doublearm launch file -->
+    <include file="$(find doublearm_gazebo)/launch/doublearm_gazebo_states.launch" /> 
+    
+    <!-- ros_control trajectory control dof doublearm launch file -->
+    <include file="$(find doublearm_gazebo)/launch/doublearm_trajectory_controller.launch" />
+
+    <!-- moveit launch file -->
+    <include file="$(find doublearm_moveit_config)/launch/moveit_planning_execution.launch" />
+   
+</launch>

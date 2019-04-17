@@ -1,0 +1,921 @@
+<?xml version="1.0"?>
+<robot name="doublearm" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Defining the colors used in this robot -->
+    <material name="Black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+    <material name="White">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <material name="Blue">
+        <color rgba="0 0 1 1"/>
+    </material>
+
+    <material name="Red">
+        <color rgba="1 0 0 1"/>
+    </material>
+
+    <!-- Constants -->
+    <xacro:property name="M_PI" value="3.14159"/>
+
+    <!-- link1 properties -->
+    <xacro:property name="link1_width" value="0.05" />
+    <xacro:property name="link1_len" value="0.07" />
+
+    <!-- link2 properties -->
+    <xacro:property name="link2_width" value="0.05" />
+    <xacro:property name="link2_len" value="0.1" />
+
+    <!-- link3 properties -->
+    <xacro:property name="link3_width" value="0.0375" />
+    <xacro:property name="link3_len" value="0.135" />
+
+    <!-- link4 properties -->
+    <xacro:property name="link4_width" value="0.0375" />
+    <xacro:property name="link4_len" value="0.08" />
+
+    <!-- link5 properties -->
+    <xacro:property name="link5_width" value="0.0375" />
+    <xacro:property name="link5_len" value="0.075" />
+
+    <!-- link6 properties -->
+    <xacro:property name="link6_width" value="0.0375" />
+    <xacro:property name="link6_len" value="0.095" />
+
+    <!-- palm properties -->
+    <xacro:property name="palm_len" value="0.07" />
+    <xacro:property name="palm_width" value="0.015" />
+    <xacro:property name="palm_height" value="0.08" />
+
+    <!-- thumb properties -->
+    <xacro:property name="hand_size" value="0.015" />
+    <xacro:property name="thumb_height" value="0.03" />
+
+    <!-- index_finger properties -->    
+    <xacro:property name="index_finger_height" value="0.05" />
+
+    <!-- middle_finger properties -->    
+    <xacro:property name="middle_finger_height" value="0.07" />
+
+    <!-- third_finger properties -->
+    <xacro:property name="third_finger_height" value="0.065" />
+
+    <!-- little_finger properties -->
+    <xacro:property name="little_finger_height" value="0.045" />
+
+    <!-- Inertial matrix -->
+    <xacro:macro name="inertial_matrix" params="mass">
+        <inertial>
+            <mass value="${mass}" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0" />
+        </inertial>
+    </xacro:macro>
+
+    <!-- ///////////////////////////////////////   bottom_joint   ////////////////////////////////////////// -->
+    
+    <link name="bottom_link">
+        <visual>
+              <origin xyz=" 0 0 -0.025"  rpy="0 0 0"/>
+                  <geometry>
+                       <box size="0.5 0.5 0.05" />
+                  </geometry>
+              <material name="Brown" />
+        </visual>
+        <collision>
+            <origin xyz=" 0 0 -0.025"  rpy="0 0 0"/>
+            <geometry>
+                <box size="0.5 0.5 0.05" />
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="500"/>
+    </link>  
+    <joint name="bottom_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="base_link"/>
+        <child link="bottom_link"/>
+    </joint>
+    <!-- /////////////////////////////////////   BASE LINK    ////////////////////////////////////////////// -->
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0.325" rpy="0 0 0" />
+            <geometry>
+                <box size="0.05 0.05 0.65" />
+            </geometry>
+            <material name="White" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.325" rpy="0 0 0" />
+            <geometry>
+                <box size="0.05 0.05 0.65" />
+            </geometry>
+        </collision>
+    </link> 
+    <joint name="kinetic_camera_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="kinetic_camera"/>
+        <origin xyz="0 0 0.65" rpy="0 0 0" />
+    </joint>
+
+    <!-- /////////////////////////////////////  KINETIC_CAMER  ////////////////////////////////////////////// -->
+    <link name="kinetic_camera" >
+        <visual>
+            <origin xyz="0 0 0.025" rpy="0 0 ${M_PI/2}" />
+            <geometry>
+                <mesh filename="package://doublearm_description/meshes/kinect.dae"/>
+            </geometry>
+            <material name="Black" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.025" rpy="0 0 0" />
+            <geometry>
+                <box size="0.05 0.2 0.05"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+
+    <joint name="right_joint1" type="fixed">
+        <parent link="base_link"/>
+        <child link="right_link1"/>
+        <origin xyz="0 -0.025 0.55" rpy="0 0 0" />
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_LINK1  ////////////////////////////////////////////// -->
+    <link name="right_link1" >
+        <visual>
+            <origin xyz="0 -${link1_len/2} 0" rpy="-${M_PI/2} 0 0" />
+            <geometry>
+                <cylinder radius="${link1_width}" length="${link1_len}"/>
+            </geometry>
+            <material name="Blue" />
+        </visual>
+        <collision>
+            <origin xyz="0 -${link1_len/2} 0" rpy="-${M_PI/2} 0 0" />
+            <geometry>
+                <cylinder radius="${link1_width}" length="${link1_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="left_joint1" type="fixed">
+        <parent link="base_link"/>
+        <child link="left_link1"/>
+        <origin xyz="0 0.025 0.55" rpy="0 0 0" />
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_LINK1  ////////////////////////////////////////////// -->
+    <link name="left_link1" >
+        <visual>
+            <origin xyz="0 ${link1_len/2} 0" rpy="${M_PI/2} 0 0" />
+            <geometry>
+                <cylinder radius="${link1_width}" length="${link1_len}"/>
+            </geometry>
+            <material name="Blue" />
+        </visual>
+        <collision>
+            <origin xyz="0 ${link1_len/2} 0" rpy="${M_PI/2} 0 0" />
+            <geometry>
+                <cylinder radius="${link1_width}" length="${link1_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="right_joint2" type="revolute">
+        <parent link="right_link1"/>
+        <child link="right_link2"/>
+        <origin xyz="0 -${link1_len} 0" rpy="0 0 0" />
+        <axis xyz="0 -1 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_LINK2  ////////////////////////////////////////////// -->
+    <link name="right_link2" >
+        <visual>
+            <origin xyz="0 -${link2_len/2} 0" rpy="${M_PI/2} 0 0" />
+            <geometry>
+                <cylinder radius="${link2_width}" length="${link2_len}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 -${link2_len/2} 0" rpy="${M_PI/2} 0 0" />
+            <geometry>
+                <cylinder radius="${link2_width}" length="${link2_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="left_joint2" type="revolute">
+        <parent link="left_link1"/>
+        <child link="left_link2"/>
+        <origin xyz="0 ${link1_len} 0" rpy="0 0 0" />
+        <axis xyz="0 -1 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_LINK2  ////////////////////////////////////////////// -->
+    <link name="left_link2" >
+        <visual>
+            <origin xyz="0 ${link2_len/2} 0" rpy="-${M_PI/2} 0 0" />
+            <geometry>
+                <cylinder radius="${link2_width}" length="${link2_len}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 ${link2_len/2} 0" rpy="-${M_PI/2} 0 0" />
+            <geometry>
+                <cylinder radius="${link2_width}" length="${link2_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="right_joint3" type="revolute">
+        <parent link="right_link2"/>
+        <child link="right_link3"/>
+        <origin xyz="0 -${link2_len-0.038} 0" rpy="0 0 0" />
+        <axis xyz="-1 0 0" />
+        <limit effort="300" velocity="1" lower="-${M_PI/4}" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_LINK3  ////////////////////////////////////////////// -->
+    <link name="right_link3" >
+        <visual>
+            <origin xyz="0 0 -${link3_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link3_width}" length="${link3_len}"/>
+            </geometry>
+            <material name="Black" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${link3_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link3_width}" length="${link3_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="left_joint3" type="revolute">
+        <parent link="left_link2"/>
+        <child link="left_link3"/>
+        <origin xyz="0 ${link2_len-0.038} 0" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="300" velocity="1" lower="-${M_PI/4}" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_LINK3  ////////////////////////////////////////////// -->
+    <link name="left_link3" >
+        <visual>
+            <origin xyz="0 0 -${link3_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link3_width}" length="${link3_len}"/>
+            </geometry>
+            <material name="Black" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${link3_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link3_width}" length="${link3_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="right_joint4" type="revolute">
+        <parent link="right_link3"/>
+        <child link="right_link4"/>
+        <origin xyz="0 0 -${link3_len}" rpy="0 0 0" />
+        <axis xyz="0 0 -1" />
+        <limit effort="300" velocity="1" lower="-${M_PI/4}" upper="${M_PI/4}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_LINK4  ////////////////////////////////////////////// -->
+    <link name="right_link4" >
+        <visual>
+            <origin xyz="0 0 -${link4_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link4_width}" length="${link4_len}"/>
+            </geometry>
+            <material name="Blue" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${link4_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link4_width}" length="${link4_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="left_joint4" type="revolute">
+        <parent link="left_link3"/>
+        <child link="left_link4"/>
+        <origin xyz="0 0 -${link3_len}" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <limit effort="300" velocity="1" lower="-${M_PI/4}" upper="${M_PI/4}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_LINK4  ////////////////////////////////////////////// -->
+    <link name="left_link4" >
+        <visual>
+            <origin xyz="0 0 -${link4_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link4_width}" length="${link4_len}"/>
+            </geometry>
+            <material name="Blue" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${link4_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link4_width}" length="${link4_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="right_joint5" type="revolute">
+        <parent link="right_link4"/>
+        <child link="right_link5"/>
+        <origin xyz="0 0 -${link4_len}" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI*3/4}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_LINK5  ////////////////////////////////////////////// -->
+    <link name="right_link5" >
+        <visual>
+            <origin xyz="0 0 -${link5_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link5_width}" length="${link5_len}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${link5_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link5_width}" length="${link5_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="left_joint5" type="revolute">
+        <parent link="left_link4"/>
+        <child link="left_link5"/>
+        <origin xyz="0 0 -${link4_len}" rpy="0 0 0" />
+        <axis xyz="-1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI*3/4}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_LINK5  ////////////////////////////////////////////// -->
+    <link name="left_link5" >
+        <visual>
+            <origin xyz="0 0 -${link5_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link5_width}" length="${link5_len}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${link5_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link5_width}" length="${link5_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>  
+    <joint name="right_joint6" type="revolute">
+        <parent link="right_link5"/>
+        <child link="right_link6"/>
+        <origin xyz="0 0 -${link5_len}" rpy="0 0 0" />
+        <axis xyz="0 0 -1" />
+        <limit effort="300" velocity="1" lower="-${M_PI/4}" upper="${M_PI/4}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_LINK6  ////////////////////////////////////////////// -->
+    <link name="right_link6" >
+        <visual>
+            <origin xyz="0 0 -${link6_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link6_width}" length="${link6_len}"/>
+            </geometry>
+            <material name="Black" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${link6_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link6_width}" length="${link6_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="left_joint6" type="revolute">
+        <parent link="left_link5"/>
+        <child link="left_link6"/>
+        <origin xyz="0 0 -${link5_len}" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <limit effort="300" velocity="1" lower="-${M_PI/4}" upper="${M_PI/4}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_LINK6  ////////////////////////////////////////////// -->
+    <link name="left_link6" >
+        <visual>
+            <origin xyz="0 0 -${link6_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link6_width}" length="${link6_len}"/>
+            </geometry>
+            <material name="Black" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${link6_len/2}" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${link6_width}" length="${link6_len}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="left_palm_joint" type="revolute">
+        <parent link="left_link6"/>
+        <child link="left_palm"/>
+        <origin xyz="0 0 -${link6_len}" rpy="0 0 0" />
+        <axis xyz="-1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/3}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_PALM  ////////////////////////////////////////////// -->
+    <link name="left_palm" >
+        <visual>
+            <origin xyz="0 0 -${palm_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${palm_len} ${palm_width} ${palm_height}"/>
+            </geometry>
+            <material name="Blue" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${palm_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${palm_len} ${palm_width} ${palm_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="right_palm_joint" type="revolute">
+        <parent link="right_link6"/>
+        <child link="right_palm"/>
+        <origin xyz="0 0 -${link6_len}" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/3}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_PALM  ////////////////////////////////////////////// -->
+    <link name="right_palm" >
+        <visual>
+            <origin xyz="0 0 -${palm_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${palm_len} ${palm_width} ${palm_height}"/>
+            </geometry>
+            <material name="Blue" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${palm_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${palm_len} ${palm_width} ${palm_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="left_thumb_joint" type="revolute">
+        <parent link="left_palm"/>
+        <child link="left_thumb"/>
+        <origin xyz="${palm_len/2-0.005} 0 -${palm_height-0.05}" rpy="0 -${M_PI/4} 0" />
+        <axis xyz="-1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_THUMB  ////////////////////////////////////////////// -->
+    <link name="left_thumb" >
+        <visual>
+            <origin xyz="0 0 -${thumb_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${thumb_height}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${thumb_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${thumb_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>  
+    <joint name="right_thumb_joint" type="revolute">
+        <parent link="right_palm"/>
+        <child link="right_thumb"/>
+        <origin xyz="${palm_len/2-0.005} 0 -${palm_height-0.05}" rpy="0 -${M_PI/4} 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_THUMB  ////////////////////////////////////////////// -->
+    <link name="right_thumb" >
+        <visual>
+            <origin xyz="0 0 -${thumb_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${thumb_height}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${thumb_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${thumb_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="left_index_finger_joint" type="revolute">
+        <parent link="left_palm"/>
+        <child link="left_index_finger"/>
+        <origin xyz="${palm_len/2-0.0075} 0 -${palm_height-0.01}" rpy="0 0 0" />
+        <axis xyz="-1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_INDEX_FINGER  ////////////////////////////////////////////// -->
+    <link name="left_index_finger" >
+        <visual>
+            <origin xyz="0 0 -${index_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${index_finger_height}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${index_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${index_finger_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="right_index_finger_joint" type="revolute">
+        <parent link="right_palm"/>
+        <child link="right_index_finger"/>
+        <origin xyz="${palm_len/2-0.0075} 0 -${palm_height-0.01}" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_INDEX_FINGER  ////////////////////////////////////////////// -->
+    <link name="right_index_finger" >
+        <visual>
+            <origin xyz="0 0 -${index_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${index_finger_height}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${index_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${index_finger_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="left_middle_finger_joint" type="revolute">
+        <parent link="left_palm"/>
+        <child link="left_middle_finger"/>
+        <origin xyz="${palm_len/2-0.0258} 0 -${palm_height-0.01}" rpy="0 0 0" />
+        <axis xyz="-1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_MIDDLE_FINGER  ////////////////////////////////////////////// -->
+    <link name="left_middle_finger" >
+        <visual>
+            <origin xyz="0 0 -${middle_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${middle_finger_height}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${middle_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${middle_finger_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="right_middle_finger_joint" type="revolute">
+        <parent link="right_palm"/>
+        <child link="right_middle_finger"/>
+        <origin xyz="${palm_len/2-0.0258} 0 -${palm_height-0.01}" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_MIDDLE_FINGER  ////////////////////////////////////////////// -->
+    <link name="right_middle_finger" >
+        <visual>
+            <origin xyz="0 0 -${middle_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${middle_finger_height}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${middle_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${middle_finger_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="left_third_finger_joint" type="revolute">
+        <parent link="left_palm"/>
+        <child link="left_third_finger"/>
+        <origin xyz="${palm_len/2-0.0441} 0 -${palm_height-0.01}" rpy="0 0 0" />
+        <axis xyz="-1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_THIRD_FINGER  ////////////////////////////////////////////// -->
+    <link name="left_third_finger" >
+        <visual>
+            <origin xyz="0 0 -${third_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${third_finger_height}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${third_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${third_finger_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="right_third_finger_joint" type="revolute">
+        <parent link="right_palm"/>
+        <child link="right_third_finger"/>
+        <origin xyz="${palm_len/2-0.0441} 0 -${palm_height-0.01}" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_THIRD_FINGER  ////////////////////////////////////////////// -->
+    <link name="right_third_finger" >
+        <visual>
+            <origin xyz="0 0 -${third_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${third_finger_height}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${third_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${third_finger_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>  
+    <joint name="left_little_finger_joint" type="revolute">
+        <parent link="left_palm"/>
+        <child link="left_little_finger"/>
+        <origin xyz="-${palm_len/2-0.0075} 0 -${palm_height-0.01}" rpy="0 0 0" />
+        <axis xyz="-1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_LITTLE_FINGER  ////////////////////////////////////////////// -->
+    <link name="left_little_finger" >
+        <visual>
+            <origin xyz="0 0 -${little_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${little_finger_height}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${little_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${little_finger_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+    <joint name="right_little_finger_joint" type="revolute">
+        <parent link="right_palm"/>
+        <child link="right_little_finger"/>
+        <origin xyz="-${palm_len/2-0.0075} 0 -${palm_height-0.01}" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="300" velocity="1" lower="0" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_LITTLE_FINGER  ////////////////////////////////////////////// -->
+    <link name="right_little_finger" >
+        <visual>
+            <origin xyz="0 0 -${little_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${little_finger_height}"/>
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 -${little_finger_height/2}" rpy="0 0 0" />
+            <geometry>
+                <box size="${hand_size} ${hand_size} ${little_finger_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+
+    <!-- /////////////////////////////////   Gazebo   ////////////////////////////////////// -->
+    <gazebo reference="bottom_link">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="base_link">
+        <material>Gazebo/White</material>
+    </gazebo>
+    <gazebo reference="kinetic_camera">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="left_link1">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <gazebo reference="left_link2">
+        <material>Gazebo/White</material>
+    </gazebo>
+    <gazebo reference="left_link3">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <gazebo reference="left_link4">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="left_link5">
+        <material>Gazebo/White</material>
+    </gazebo>
+    <gazebo reference="left_link6">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <gazebo reference="left_palm">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="left_thumb">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="left_index_finger">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="left_middle_finger">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="left_third_finger">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="left_little_finger">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="right_link1">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <gazebo reference="right_link2">
+        <material>Gazebo/White</material>
+    </gazebo>
+    <gazebo reference="right_link3">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <gazebo reference="right_link4">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="right_link5">
+        <material>Gazebo/White</material>
+    </gazebo>
+    <gazebo reference="right_link6">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <gazebo reference="right_palm">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="right_thumb">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="right_index_finger">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="right_middle_finger">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="right_third_finger">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="right_little_finger">
+        <material>Gazebo/Red</material>
+    </gazebo>
+
+    <gazebo reference="kinetic_camera">
+            <sensor type="camera" name="camera_node">
+                <update_rate>30.0</update_rate>
+                <camera name="head">
+                    <horizontal_fov>1.3962634</horizontal_fov>
+                    <image>
+                        <width>1280</width>
+                        <height>720</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>0.02</near>
+                        <far>300</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.007</stddev>
+                    </noise>
+                </camera>
+                <plugin name="gazebo_camera" filename="libgazebo_ros_camera.so">
+                    <alwaysOn>true</alwaysOn>
+                    <updateRate>0.0</updateRate>
+                    <cameraName>/camera</cameraName>
+                    <imageTopicName>image_raw</imageTopicName>
+                    <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                    <frameName>camera_link</frameName>
+                    <hackBaseline>0.07</hackBaseline>
+                    <distortionK1>0.0</distortionK1>
+                    <distortionK2>0.0</distortionK2>
+                    <distortionK3>0.0</distortionK3>
+                    <distortionT1>0.0</distortionT1>
+                    <distortionT2>0.0</distortionT2>
+                </plugin>
+            </sensor>
+        </gazebo>
+    <!-- Transmissions for ROS Control -->
+    <xacro:macro name="transmission_block" params="joint_name">
+        <transmission name="tran1">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${joint_name}">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="motor1">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+       
+    <xacro:transmission_block joint_name="left_joint2"/>
+    <xacro:transmission_block joint_name="left_joint3"/>
+    <xacro:transmission_block joint_name="left_joint4"/>
+    <xacro:transmission_block joint_name="left_joint5"/>
+    <xacro:transmission_block joint_name="left_joint6"/>
+    <xacro:transmission_block joint_name="left_palm_joint"/>
+    <xacro:transmission_block joint_name="left_thumb_joint"/>
+    <xacro:transmission_block joint_name="left_index_finger_joint"/>
+    <xacro:transmission_block joint_name="left_middle_finger_joint"/>
+    <xacro:transmission_block joint_name="left_third_finger_joint"/>
+    <xacro:transmission_block joint_name="left_little_finger_joint"/>
+    <xacro:transmission_block joint_name="right_joint2"/>
+    <xacro:transmission_block joint_name="right_joint3"/>
+    <xacro:transmission_block joint_name="right_joint4"/>
+    <xacro:transmission_block joint_name="right_joint5"/>
+    <xacro:transmission_block joint_name="right_joint6"/>
+    <xacro:transmission_block joint_name="right_palm_joint"/>
+    <xacro:transmission_block joint_name="right_thumb_joint"/>
+    <xacro:transmission_block joint_name="right_index_finger_joint"/>
+    <xacro:transmission_block joint_name="right_middle_finger_joint"/>
+    <xacro:transmission_block joint_name="right_third_finger_joint"/>
+    <xacro:transmission_block joint_name="right_little_finger_joint"/>
+
+    <!-- ros_control plugin -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/doublearm</robotNamespace>
+        </plugin>
+    </gazebo>
+</robot>

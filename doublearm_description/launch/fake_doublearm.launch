@@ -1,0 +1,20 @@
+<launch>
+    <!-- 不使用仿真时间 -->
+    <param name="/use_sim_time" value="false" />
+
+    <!-- 启动arbotix driver-->
+    <arg name="sim" default="true" />
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find doublearm_description)/urdf/doublearm.xacro'" />
+
+    <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+        <rosparam file="$(find doublearm_description)/config/doublearm.yaml" command="load" />
+        <param name="sim" value="true"/>
+    </node>
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="rob_st_pub" />
+
+    <!-- 启动rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find doublearm_description)/urdf.rviz" required="true" />
+
+</launch>

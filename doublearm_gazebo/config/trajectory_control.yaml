@@ -1,0 +1,68 @@
+doublearm:
+  left_arm_joint_controller:
+    type: "position_controllers/JointTrajectoryController"
+    joints:
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_palm_joint
+      
+    gains:
+      left_joint2:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      left_joint3:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      left_joint4:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      left_joint5:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      left_joint6:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      left_palm_joint:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      
+  right_arm_joint_controller:
+    type: "position_controllers/JointTrajectoryController"
+    joints:
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_palm_joint
+
+    gains:
+      right_joint2:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      right_joint3:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      right_joint4:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      right_joint5:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      right_joint6:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      right_palm_joint:   {p: 1000.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+
+
+  left_hand_controller:
+    type: "position_controllers/JointTrajectoryController"
+    joints:
+      - left_thumb_joint
+      - left_index_finger_joint
+      - left_middle_finger_joint
+      - left_third_finger_joint
+      - left_little_finger_joint
+    gains:
+      left_thumb_joint:  {p: 50.0, d: 1.0, i: 0.01, i_clamp: 1.0}
+      left_index_finger_joint:  {p: 50.0, d: 1.0, i: 0.01, i_clamp: 1.0}
+      left_middle_finger_joint:  {p: 50.0, d: 1.0, i: 0.01, i_clamp: 1.0}
+      left_third_finger_joint:  {p: 50.0, d: 1.0, i: 0.01, i_clamp: 1.0}
+      left_little_finger_joint:  {p: 50.0, d: 1.0, i: 0.01, i_clamp: 1.0}
+
+
+  right_hand_controller:
+    type: "position_controllers/JointTrajectoryController"
+    joints:
+      - right_thumb_joint
+      - right_index_finger_joint
+      - right_middle_finger_joint
+      - right_third_finger_joint
+      - right_little_finger_joint
+    gains:
+      right_thumb_joint:  {p: 50.0, d: 1.0, i: 0.01, i_clamp: 1.0}
+      right_index_finger_joint:  {p: 50.0, d: 1.0, i: 0.01, i_clamp: 1.0}
+      right_middle_finger_joint:  {p: 50.0, d: 1.0, i: 0.01, i_clamp: 1.0}
+      right_third_finger_joint:  {p: 50.0, d: 1.0, i: 0.01, i_clamp: 1.0}
+      right_little_finger_joint:  {p: 50.0, d: 1.0, i: 0.01, i_clamp: 1.0}

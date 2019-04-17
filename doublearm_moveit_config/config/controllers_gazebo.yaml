@@ -1,0 +1,47 @@
+controller_manager_ns: controller_manager
+controller_list:
+  - name: doublearm/left_arm_joint_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_palm_joint
+
+  - name: doublearm/right_arm_joint_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_palm_joint
+
+  - name: doublearm/left_hand_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - left_thumb_joint
+      - left_index_finger_joint
+      - left_middle_finger_joint
+      - left_third_finger_joint
+      - left_little_finger_joint
+
+  - name: doublearm/right_hand_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - right_thumb_joint
+      - right_index_finger_joint
+      - right_middle_finger_joint
+      - right_third_finger_joint
+      - right_little_finger_joint

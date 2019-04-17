@@ -1,0 +1,32 @@
+joints: {
+    left_joint2: {id: 1, max_angle: 90, min_angle: 0, max_speed: 90},
+    left_joint3: {id: 2, max_angle: 90, min_angle: -45, max_speed: 90},
+    left_joint4: {id: 3, max_angle: 45, min_angle: -45, max_speed: 90},
+    left_joint5: {id: 4, max_angle: 135, min_angle: 0, max_speed: 90},
+    left_joint6: {id: 5, max_angle: 45, min_angle: -45, max_speed: 90},
+    left_palm_joint: {id: 6, max_angle: 60, min_angle: 0, max_speed: 90},
+    left_thumb_joint: {id: 7, max_angle: 90, min_angle: 0, max_speed: 90},
+    left_index_finger_joint: {id: 8, max_angle: 90, min_angle: 0, max_speed: 90},
+    left_middle_finger_joint: {id: 9, max_angle: 90, min_angle: 0, max_speed: 90},
+    left_third_finger_joint: {id: 10, max_angle: 90, min_angle: 0, max_speed: 90},
+    left_little_finger_joint: {id: 11, max_angle: 90, min_angle: 0, max_speed: 90},
+    right_joint2: {id: 12, max_angle: 90, min_angle: 0, max_speed: 90},
+    right_joint3: {id: 13, max_angle: 90, min_angle: -45, max_speed: 90},
+    right_joint4: {id: 14, max_angle: 45, min_angle: -45, max_speed: 90},
+    right_joint5: {id: 15, max_angle: 135, min_angle: 0, max_speed: 90},
+    right_joint6: {id: 16, max_angle: 45, min_angle: -45, max_speed: 90},
+    right_palm_joint: {id: 17, max_angle: 60, min_angle: 0, max_speed: 90},
+    right_thumb_joint: {id: 18, max_angle: 90, min_angle: 0, max_speed: 90},
+    right_index_finger_joint: {id: 19, max_angle: 90, min_angle: 0, max_speed: 90},
+    right_middle_finger_joint: {id: 20, max_angle: 90, min_angle: 0, max_speed: 90},
+    right_third_finger_joint: {id: 21, max_angle: 90, min_angle: 0, max_speed: 90},
+    right_little_finger_joint: {id: 22, max_angle: 90, min_angle: 0, max_speed: 90},
+    
+}
+controllers: {
+    doublearm_controller: {type: follow_controller, joints: [left_joint2, left_joint3, left_joint4, left_joint5, left_joint6, left_palm_joint,left_thumb_joint,left_index_finger_joint,left_middle_finger_joint,left_third_finger_joint,left_little_finger_joint,
+right_joint2,right_joint3,right_joint4,right_joint5,right_joint6,right_palm_joint,
+right_thumb_joint,right_index_finger_joint,right_middle_finger_joint,right_third_finger_joint,right_little_finger_joint], 
+action_name: doublearm_controller/follow_joint_trajectory, onboard: False }
+
+}

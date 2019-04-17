@@ -1,0 +1,11 @@
+<launch>
+
+    <rosparam file="$(find doublearm_gazebo)/config/trajectory_control.yaml" command="load"/>
+
+    <node name="doublearm_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" ns="/doublearm" args="left_arm_joint_controller
+                                                right_arm_joint_controller
+                                                left_hand_controller
+                                                right_hand_controller"/>
+
+</launch>

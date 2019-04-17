@@ -1,0 +1,56 @@
+doublearm:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+  
+  # Position Controllers ---------------------------------------
+  left_joint2_position_controller:
+    type: position_controllers/JointPositionController
+    joint: left_joint2
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  left_joint3_position_controller:
+    type: position_controllers/JointPositionController
+    joint: left_joint3
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  left_joint4_position_controller:
+    type: position_controllers/JointPositionController
+    joint: left_joint4
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  left_joint5_position_controller:
+    type: position_controllers/JointPositionController
+    joint: left_joint5
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  left_joint6_position_controller:
+    type: position_controllers/JointPositionController
+    joint: left_joint6
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  left_palm_joint_position_controller:
+    type: position_controllers/JointPositionController
+    joint: left_palm_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  right_joint2_position_controller:
+    type: position_controllers/JointPositionController
+    joint: right_joint2
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  right_joint3_position_controller:
+    type: position_controllers/JointPositionController
+    joint: right_joint3
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  right_joint4_position_controller:
+    type: position_controllers/JointPositionController
+    joint: right_joint4
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  right_joint5_position_controller:
+    type: position_controllers/JointPositionController
+    joint: right_joint5
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  right_joint6_position_controller:
+    type: position_controllers/JointPositionController
+    joint: right_joint6
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  right_palm_joint_position_controller:
+    type: position_controllers/JointPositionController
+    joint: right_palm_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+ 

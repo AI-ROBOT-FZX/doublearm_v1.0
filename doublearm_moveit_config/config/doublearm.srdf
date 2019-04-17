@@ -1,0 +1,337 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="doublearm">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="left_arm">
+        <joint name="left_joint2" />
+        <joint name="left_joint3" />
+        <joint name="left_joint4" />
+        <joint name="left_joint5" />
+        <joint name="left_joint6" />
+        <joint name="left_palm_joint" />
+    </group>
+    <group name="right_arm">
+        <joint name="right_joint2" />
+        <joint name="right_joint3" />
+        <joint name="right_joint4" />
+        <joint name="right_joint5" />
+        <joint name="right_joint6" />
+        <joint name="right_palm_joint" />
+    </group>
+    <group name="left_hand">
+        <joint name="left_index_finger_joint" />
+        <joint name="left_little_finger_joint" />
+        <joint name="left_middle_finger_joint" />
+        <joint name="left_third_finger_joint" />
+        <joint name="left_thumb_joint" />
+    </group>
+    <group name="right_hand">
+        <joint name="right_index_finger_joint" />
+        <joint name="right_little_finger_joint" />
+        <joint name="right_middle_finger_joint" />
+        <joint name="right_third_finger_joint" />
+        <joint name="right_thumb_joint" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="left_arm_home" group="left_arm">
+        <joint name="left_joint2" value="0" />
+        <joint name="left_joint3" value="0" />
+        <joint name="left_joint4" value="0" />
+        <joint name="left_joint5" value="0" />
+        <joint name="left_joint6" value="0" />
+        <joint name="left_palm_joint" value="0" />
+    </group_state>
+    <group_state name="right_arm_home" group="right_arm">
+        <joint name="right_joint2" value="0" />
+        <joint name="right_joint3" value="0" />
+        <joint name="right_joint4" value="0" />
+        <joint name="right_joint5" value="0" />
+        <joint name="right_joint6" value="0" />
+        <joint name="right_palm_joint" value="0" />
+    </group_state>
+    <group_state name="left_hand_home" group="left_hand">
+        <joint name="left_index_finger_joint" value="0" />
+        <joint name="left_little_finger_joint" value="0" />
+        <joint name="left_middle_finger_joint" value="0" />
+        <joint name="left_third_finger_joint" value="0" />
+        <joint name="left_thumb_joint" value="0" />
+    </group_state>
+    <group_state name="right_hand_home" group="right_hand">
+        <joint name="right_index_finger_joint" value="0" />
+        <joint name="right_little_finger_joint" value="0" />
+        <joint name="right_middle_finger_joint" value="0" />
+        <joint name="right_third_finger_joint" value="0" />
+        <joint name="right_thumb_joint" value="0" />
+    </group_state>
+    <group_state name="left_arm_up" group="left_arm">
+        <joint name="left_joint2" value="1.0297" />
+        <joint name="left_joint3" value="0.2225" />
+        <joint name="left_joint4" value="0.349" />
+        <joint name="left_joint5" value="0.4974" />
+        <joint name="left_joint6" value="0.7853" />
+        <joint name="left_palm_joint" value="0.3258" />
+    </group_state>
+    <group_state name="right_arm_up" group="right_arm">
+        <joint name="right_joint2" value="1.0908" />
+        <joint name="right_joint3" value="0.2356" />
+        <joint name="right_joint4" value="0.3403" />
+        <joint name="right_joint5" value="0.3927" />
+        <joint name="right_joint6" value="0.6806" />
+        <joint name="right_palm_joint" value="0.3432" />
+    </group_state>
+    <group_state name="left_arm_thanks" group="left_arm">
+        <joint name="left_joint2" value="1.4311" />
+        <joint name="left_joint3" value="0.3665" />
+        <joint name="left_joint4" value="0.0524" />
+        <joint name="left_joint5" value="1.0079" />
+        <joint name="left_joint6" value="-0.0524" />
+        <joint name="left_palm_joint" value="0.4537" />
+    </group_state>
+    <group_state name="left_hand_thanks" group="left_hand">
+        <joint name="left_index_finger_joint" value="0.4712" />
+        <joint name="left_little_finger_joint" value="0.445" />
+        <joint name="left_middle_finger_joint" value="0.4799" />
+        <joint name="left_third_finger_joint" value="0.445" />
+        <joint name="left_thumb_joint" value="0.4712" />
+    </group_state>
+    <group_state name="right_arm_thanks" group="right_arm">
+        <joint name="right_joint2" value="1.37" />
+        <joint name="right_joint3" value="0.3142" />
+        <joint name="right_joint4" value="0.1745" />
+        <joint name="right_joint5" value="0.9555" />
+        <joint name="right_joint6" value="-0.1047" />
+        <joint name="right_palm_joint" value="0.3432" />
+    </group_state>
+    <group_state name="right_hand_thanks" group="right_hand">
+        <joint name="right_index_finger_joint" value="0.4712" />
+        <joint name="right_little_finger_joint" value="0.4363" />
+        <joint name="right_middle_finger_joint" value="0.4538" />
+        <joint name="right_third_finger_joint" value="0.4625" />
+        <joint name="right_thumb_joint" value="0.4363" />
+    </group_state>
+    <group_state name="right_arm_good" group="right_arm">
+        <joint name="right_joint2" value="1.5707" />
+        <joint name="right_joint3" value="0" />
+        <joint name="right_joint4" value="0" />
+        <joint name="right_joint5" value="0" />
+        <joint name="right_joint6" value="0" />
+        <joint name="right_palm_joint" value="0" />
+    </group_state>
+    <group_state name="right_hand_good" group="right_hand">
+        <joint name="right_index_finger_joint" value="1.5707" />
+        <joint name="right_little_finger_joint" value="1.5707" />
+        <joint name="right_middle_finger_joint" value="1.5707" />
+        <joint name="right_third_finger_joint" value="1.5707" />
+        <joint name="right_thumb_joint" value="0" />
+    </group_state>
+    <group_state name="left_arm_kungfu" group="left_arm">
+        <joint name="left_joint2" value="0.8464" />
+        <joint name="left_joint3" value="0.0917" />
+        <joint name="left_joint4" value="0.1832" />
+        <joint name="left_joint5" value="0.8639" />
+        <joint name="left_joint6" value="0.7853" />
+        <joint name="left_palm_joint" value="0.3898" />
+    </group_state>
+    <group_state name="right_arm_kungfu" group="right_arm">
+        <joint name="right_joint2" value="1.4224" />
+        <joint name="right_joint3" value="0.0655" />
+        <joint name="right_joint4" value="-0.3752" />
+        <joint name="right_joint5" value="0.8115" />
+        <joint name="right_joint6" value="-0.7853" />
+        <joint name="right_palm_joint" value="0" />
+    </group_state>
+    <group_state name="right_arm_applaud" group="right_arm">
+        <joint name="right_joint2" value="1.4136" />
+        <joint name="right_joint3" value="-0.2879" />
+        <joint name="right_joint4" value="0.0087" />
+        <joint name="right_joint5" value="0.1309" />
+        <joint name="right_joint6" value="0.0175" />
+        <joint name="right_palm_joint" value="0" />
+    </group_state>
+    <group_state name="left_arm_applaud" group="left_arm">
+        <joint name="left_joint2" value="1.4049" />
+        <joint name="left_joint3" value="-0.0916" />
+        <joint name="left_joint4" value="0.0436" />
+        <joint name="left_joint5" value="0.1833" />
+        <joint name="left_joint6" value="0.192" />
+        <joint name="left_palm_joint" value="0.0175" />
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="left_finger" parent_link="left_palm" group="left_hand" />
+    <end_effector name="right_finger" parent_link="right_palm" group="right_hand" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="base_link" link2="bottom_link" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="kinetic_camera" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="left_link1" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="left_link2" reason="Never" />
+    <disable_collisions link1="base_link" link2="left_link3" reason="Never" />
+    <disable_collisions link1="base_link" link2="right_link1" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="right_link2" reason="Never" />
+    <disable_collisions link1="base_link" link2="right_link3" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="kinetic_camera" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_index_finger" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_link1" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_link2" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_link3" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_link4" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_link5" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_link6" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_little_finger" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_middle_finger" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_palm" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_third_finger" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="left_thumb" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_index_finger" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_link1" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_link2" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_link3" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_link4" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_link5" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_link6" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_little_finger" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_middle_finger" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_palm" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_third_finger" reason="Never" />
+    <disable_collisions link1="bottom_link" link2="right_thumb" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="left_link1" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="left_link2" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="left_link3" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="left_link4" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="left_link5" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="left_link6" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="right_link1" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="right_link2" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="right_link3" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="right_link4" reason="Never" />
+    <disable_collisions link1="kinetic_camera" link2="right_link5" reason="Never" />
+    <disable_collisions link1="left_index_finger" link2="left_link3" reason="Never" />
+    <disable_collisions link1="left_index_finger" link2="left_link4" reason="Never" />
+    <disable_collisions link1="left_index_finger" link2="left_link5" reason="Never" />
+    <disable_collisions link1="left_index_finger" link2="left_link6" reason="Never" />
+    <disable_collisions link1="left_index_finger" link2="left_little_finger" reason="Never" />
+    <disable_collisions link1="left_index_finger" link2="left_middle_finger" reason="Never" />
+    <disable_collisions link1="left_index_finger" link2="left_palm" reason="Adjacent" />
+    <disable_collisions link1="left_index_finger" link2="left_third_finger" reason="Never" />
+    <disable_collisions link1="left_index_finger" link2="left_thumb" reason="Never" />
+    <disable_collisions link1="left_link1" link2="left_link2" reason="Adjacent" />
+    <disable_collisions link1="left_link1" link2="left_link4" reason="Never" />
+    <disable_collisions link1="left_link1" link2="left_link5" reason="Never" />
+    <disable_collisions link1="left_link1" link2="right_link1" reason="Never" />
+    <disable_collisions link1="left_link1" link2="right_link2" reason="Never" />
+    <disable_collisions link1="left_link1" link2="right_link3" reason="Never" />
+    <disable_collisions link1="left_link1" link2="right_link4" reason="Never" />
+    <disable_collisions link1="left_link1" link2="right_link5" reason="Never" />
+    <disable_collisions link1="left_link2" link2="left_link3" reason="Adjacent" />
+    <disable_collisions link1="left_link2" link2="left_link4" reason="Never" />
+    <disable_collisions link1="left_link2" link2="left_link5" reason="Never" />
+    <disable_collisions link1="left_link2" link2="left_link6" reason="Never" />
+    <disable_collisions link1="left_link2" link2="left_palm" reason="Never" />
+    <disable_collisions link1="left_link2" link2="left_thumb" reason="Never" />
+    <disable_collisions link1="left_link2" link2="right_link1" reason="Never" />
+    <disable_collisions link1="left_link2" link2="right_link2" reason="Never" />
+    <disable_collisions link1="left_link2" link2="right_link3" reason="Never" />
+    <disable_collisions link1="left_link2" link2="right_link4" reason="Never" />
+    <disable_collisions link1="left_link2" link2="right_link5" reason="Never" />
+    <disable_collisions link1="left_link3" link2="left_link4" reason="Adjacent" />
+    <disable_collisions link1="left_link3" link2="left_link5" reason="Never" />
+    <disable_collisions link1="left_link3" link2="left_little_finger" reason="Never" />
+    <disable_collisions link1="left_link3" link2="left_middle_finger" reason="Never" />
+    <disable_collisions link1="left_link3" link2="left_palm" reason="Never" />
+    <disable_collisions link1="left_link3" link2="left_third_finger" reason="Never" />
+    <disable_collisions link1="left_link3" link2="left_thumb" reason="Never" />
+    <disable_collisions link1="left_link3" link2="right_link1" reason="Never" />
+    <disable_collisions link1="left_link3" link2="right_link2" reason="Never" />
+    <disable_collisions link1="left_link3" link2="right_link3" reason="Never" />
+    <disable_collisions link1="left_link3" link2="right_link4" reason="Never" />
+    <disable_collisions link1="left_link3" link2="right_link5" reason="Never" />
+    <disable_collisions link1="left_link4" link2="left_link5" reason="Adjacent" />
+    <disable_collisions link1="left_link4" link2="left_little_finger" reason="Never" />
+    <disable_collisions link1="left_link4" link2="left_middle_finger" reason="Never" />
+    <disable_collisions link1="left_link4" link2="left_palm" reason="Never" />
+    <disable_collisions link1="left_link4" link2="left_third_finger" reason="Never" />
+    <disable_collisions link1="left_link4" link2="left_thumb" reason="Never" />
+    <disable_collisions link1="left_link4" link2="right_link1" reason="Never" />
+    <disable_collisions link1="left_link4" link2="right_link2" reason="Never" />
+    <disable_collisions link1="left_link4" link2="right_link3" reason="Never" />
+    <disable_collisions link1="left_link5" link2="left_link6" reason="Adjacent" />
+    <disable_collisions link1="left_link5" link2="left_little_finger" reason="Never" />
+    <disable_collisions link1="left_link5" link2="left_middle_finger" reason="Never" />
+    <disable_collisions link1="left_link5" link2="left_palm" reason="Never" />
+    <disable_collisions link1="left_link5" link2="left_third_finger" reason="Never" />
+    <disable_collisions link1="left_link5" link2="left_thumb" reason="Never" />
+    <disable_collisions link1="left_link5" link2="right_link1" reason="Never" />
+    <disable_collisions link1="left_link5" link2="right_link2" reason="Never" />
+    <disable_collisions link1="left_link6" link2="left_little_finger" reason="Never" />
+    <disable_collisions link1="left_link6" link2="left_middle_finger" reason="Never" />
+    <disable_collisions link1="left_link6" link2="left_palm" reason="Adjacent" />
+    <disable_collisions link1="left_link6" link2="left_third_finger" reason="Never" />
+    <disable_collisions link1="left_little_finger" link2="left_middle_finger" reason="Never" />
+    <disable_collisions link1="left_little_finger" link2="left_palm" reason="Adjacent" />
+    <disable_collisions link1="left_little_finger" link2="left_third_finger" reason="Never" />
+    <disable_collisions link1="left_little_finger" link2="left_thumb" reason="Never" />
+    <disable_collisions link1="left_middle_finger" link2="left_palm" reason="Adjacent" />
+    <disable_collisions link1="left_middle_finger" link2="left_third_finger" reason="Never" />
+    <disable_collisions link1="left_middle_finger" link2="left_thumb" reason="Never" />
+    <disable_collisions link1="left_palm" link2="left_third_finger" reason="Adjacent" />
+    <disable_collisions link1="left_palm" link2="left_thumb" reason="Adjacent" />
+    <disable_collisions link1="left_third_finger" link2="left_thumb" reason="Never" />
+    <disable_collisions link1="right_index_finger" link2="right_link3" reason="Never" />
+    <disable_collisions link1="right_index_finger" link2="right_link4" reason="Never" />
+    <disable_collisions link1="right_index_finger" link2="right_link5" reason="Never" />
+    <disable_collisions link1="right_index_finger" link2="right_link6" reason="Never" />
+    <disable_collisions link1="right_index_finger" link2="right_little_finger" reason="Never" />
+    <disable_collisions link1="right_index_finger" link2="right_middle_finger" reason="Never" />
+    <disable_collisions link1="right_index_finger" link2="right_palm" reason="Adjacent" />
+    <disable_collisions link1="right_index_finger" link2="right_third_finger" reason="Never" />
+    <disable_collisions link1="right_index_finger" link2="right_thumb" reason="Never" />
+    <disable_collisions link1="right_link1" link2="right_link2" reason="Adjacent" />
+    <disable_collisions link1="right_link1" link2="right_link4" reason="Never" />
+    <disable_collisions link1="right_link1" link2="right_link5" reason="Never" />
+    <disable_collisions link1="right_link2" link2="right_link3" reason="Adjacent" />
+    <disable_collisions link1="right_link2" link2="right_link4" reason="Never" />
+    <disable_collisions link1="right_link2" link2="right_link5" reason="Never" />
+    <disable_collisions link1="right_link2" link2="right_link6" reason="Never" />
+    <disable_collisions link1="right_link2" link2="right_palm" reason="Never" />
+    <disable_collisions link1="right_link2" link2="right_thumb" reason="Never" />
+    <disable_collisions link1="right_link3" link2="right_link4" reason="Adjacent" />
+    <disable_collisions link1="right_link3" link2="right_link5" reason="Never" />
+    <disable_collisions link1="right_link3" link2="right_little_finger" reason="Never" />
+    <disable_collisions link1="right_link3" link2="right_middle_finger" reason="Never" />
+    <disable_collisions link1="right_link3" link2="right_palm" reason="Never" />
+    <disable_collisions link1="right_link3" link2="right_third_finger" reason="Never" />
+    <disable_collisions link1="right_link3" link2="right_thumb" reason="Never" />
+    <disable_collisions link1="right_link4" link2="right_link5" reason="Adjacent" />
+    <disable_collisions link1="right_link4" link2="right_little_finger" reason="Never" />
+    <disable_collisions link1="right_link4" link2="right_middle_finger" reason="Never" />
+    <disable_collisions link1="right_link4" link2="right_palm" reason="Never" />
+    <disable_collisions link1="right_link4" link2="right_third_finger" reason="Never" />
+    <disable_collisions link1="right_link4" link2="right_thumb" reason="Never" />
+    <disable_collisions link1="right_link5" link2="right_link6" reason="Adjacent" />
+    <disable_collisions link1="right_link5" link2="right_little_finger" reason="Never" />
+    <disable_collisions link1="right_link5" link2="right_middle_finger" reason="Never" />
+    <disable_collisions link1="right_link5" link2="right_palm" reason="Never" />
+    <disable_collisions link1="right_link5" link2="right_third_finger" reason="Never" />
+    <disable_collisions link1="right_link5" link2="right_thumb" reason="Never" />
+    <disable_collisions link1="right_link6" link2="right_little_finger" reason="Never" />
+    <disable_collisions link1="right_link6" link2="right_middle_finger" reason="Never" />
+    <disable_collisions link1="right_link6" link2="right_palm" reason="Adjacent" />
+    <disable_collisions link1="right_link6" link2="right_third_finger" reason="Never" />
+    <disable_collisions link1="right_link6" link2="right_thumb" reason="Never" />
+    <disable_collisions link1="right_little_finger" link2="right_middle_finger" reason="Never" />
+    <disable_collisions link1="right_little_finger" link2="right_palm" reason="Adjacent" />
+    <disable_collisions link1="right_little_finger" link2="right_third_finger" reason="Never" />
+    <disable_collisions link1="right_little_finger" link2="right_thumb" reason="Never" />
+    <disable_collisions link1="right_middle_finger" link2="right_palm" reason="Adjacent" />
+    <disable_collisions link1="right_middle_finger" link2="right_third_finger" reason="Never" />
+    <disable_collisions link1="right_middle_finger" link2="right_thumb" reason="Never" />
+    <disable_collisions link1="right_palm" link2="right_third_finger" reason="Adjacent" />
+    <disable_collisions link1="right_palm" link2="right_thumb" reason="Adjacent" />
+    <disable_collisions link1="right_third_finger" link2="right_thumb" reason="Never" />
+</robot>

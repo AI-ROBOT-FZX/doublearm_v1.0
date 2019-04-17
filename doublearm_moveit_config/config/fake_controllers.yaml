@@ -1,0 +1,31 @@
+controller_list:
+  - name: fake_left_arm_controller
+    joints:
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_palm_joint
+  - name: fake_right_arm_controller
+    joints:
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_palm_joint
+  - name: fake_left_hand_controller
+    joints:
+      - left_index_finger_joint
+      - left_little_finger_joint
+      - left_middle_finger_joint
+      - left_third_finger_joint
+      - left_thumb_joint
+  - name: fake_right_hand_controller
+    joints:
+      - right_index_finger_joint
+      - right_little_finger_joint
+      - right_middle_finger_joint
+      - right_third_finger_joint
+      - right_thumb_joint
